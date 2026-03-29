@@ -1,11 +1,11 @@
 {
   "nav": {
-    "home": "swk",
+    "home": "sw326",
     "til": "TIL",
     "about": "about"
   },
   "home": {
-    "hero_title": "swk",
+    "hero_title": "sw326",
     "hero_subtitle": "developer",
     "recent_til": "",
     "view_all": "all"

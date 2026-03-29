@@ -1,33 +1,33 @@
 {
   "nav": {
-    "home": "swk",
+    "home": "sw326",
     "til": "TIL",
-    "about": "about"
+    "about": "소개"
   },
   "home": {
-    "hero_title": "swk",
-    "hero_subtitle": "developer",
+    "hero_title": "sw326",
+    "hero_subtitle": "개발자",
     "recent_til": "",
-    "view_all": "all"
+    "view_all": "전체"
   },
   "til": {
     "title": "TIL",
     "subtitle": "",
-    "all_tags": "all",
-    "no_posts": "no posts."
+    "all_tags": "전체",
+    "no_posts": "글이 없습니다."
   },
   "about": {
-    "title": "about",
-    "subtitle": "developer",
+    "title": "소개",
+    "subtitle": "개발자",
     "links": ""
   },
   "post": {
-    "views": "views",
-    "back": "← back",
-    "toc": "contents",
+    "views": "조회",
+    "back": "← 목록",
+    "toc": "목차",
     "tags": ""
   },
   "theme": {
-    "toggle": "theme"
+    "toggle": "테마"
   }
 }

@@ -15,7 +15,7 @@ export function Header() {
           href={`/${locale}`}
           className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
         >
-          swk
+          sw326
         </Link>
 
         <nav className="flex items-center gap-5">

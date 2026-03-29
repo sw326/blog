@@ -6,7 +6,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'swk',
+    title: 'sw326',
     description: 'developer',
   };
 }
@@ -19,7 +19,7 @@ export default async function HomePage({ params }: Props) {
     <div className="space-y-16 pt-12">
       {/* Identity */}
       <section className="space-y-1">
-        <p className="text-sm font-medium text-[var(--foreground)]">swk</p>
+        <p className="text-sm font-medium text-[var(--foreground)]">sw326</p>
         <p className="text-sm text-[var(--muted)]">developer</p>
         <div className="flex gap-6 pt-2">
           <a
@@ -49,29 +49,33 @@ export default async function HomePage({ params }: Props) {
               <Link
                 key={post.slug}
                 href={`/${locale}/til/${post.slug}`}
-                className="flex items-baseline gap-6 py-2 group"
+                className="block py-2.5 group"
               >
-                <time className="text-xs text-[var(--subtle)] shrink-0 font-mono">
-                  {post.date}
-                </time>
-                <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-                  {post.title}
-                </span>
-                {post.tags.length > 0 && (
-                  <span className="text-xs text-[var(--subtle)] shrink-0">
-                    {post.tags.join(' ')}
+                <div className="flex items-baseline gap-4 min-w-0">
+                  <time className="text-xs text-[var(--subtle)] shrink-0 font-mono w-24">
+                    {post.date}
+                  </time>
+                  <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors truncate">
+                    {post.title}
                   </span>
+                </div>
+                {post.tags.length > 0 && (
+                  <div className="pl-28 mt-0.5">
+                    <span className="text-xs text-[var(--subtle)]">
+                      {post.tags.join(' · ')}
+                    </span>
+                  </div>
                 )}
               </Link>
             ))}
           </div>
           {getAllTilMeta().length > 10 && (
-            <div className="mt-4">
+            <div className="mt-6 pl-28">
               <Link
                 href={`/${locale}/til`}
                 className="text-xs text-[var(--subtle)] hover:text-[var(--foreground)] transition-colors"
               >
-                all posts
+                all posts →
               </Link>
             </div>
           )}

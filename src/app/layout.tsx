@@ -5,8 +5,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'swk',
-    template: '%s — swk',
+    default: 'sw326',
+    template: '%s — sw326',
   },
   description: 'developer',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://sw326.vercel.app'),
