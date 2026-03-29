@@ -5,10 +5,10 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'sw326 blog',
-    template: '%s | sw326',
+    default: 'swk',
+    template: '%s — swk',
   },
-  description: '보안·개발·자동화를 배우며 기록하는 TIL 블로그',
+  description: 'developer',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://sw326.vercel.app'),
 };
 

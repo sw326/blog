@@ -6,33 +6,33 @@ import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   const params = useParams();
-  const locale = (params?.locale as string) ?? 'ko';
+  const locale = (params?.locale as string) ?? 'en';
 
   return (
-    <header className="w-full border-b border-[var(--border)]">
-      <div className="max-w-2xl mx-auto px-6 h-12 flex items-center justify-between">
+    <header className="w-full">
+      <div className="max-w-xl mx-auto px-6 h-14 flex items-center justify-between">
         <Link
           href={`/${locale}`}
-          className="text-sm font-medium text-[var(--foreground)] hover:text-[var(--muted)] transition-colors"
+          className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
         >
           swk
         </Link>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-5">
           <Link
             href={`/${locale}/til`}
             className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
           >
-            TIL
+            til
           </Link>
           <Link
             href={`/${locale}/about`}
             className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
           >
-            About
+            about
           </Link>
-          <ThemeToggle />
           <LocaleSwitcher locale={locale} />
+          <ThemeToggle />
         </nav>
       </div>
     </header>

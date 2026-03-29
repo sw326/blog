@@ -1,33 +1,33 @@
 {
   "nav": {
-    "home": "홈",
+    "home": "swk",
     "til": "TIL",
-    "about": "소개"
+    "about": "about"
   },
   "home": {
-    "hero_title": "안녕하세요, 저는 김첨지입니다",
-    "hero_subtitle": "보안·개발·자동화를 좋아하는 개발자입니다. 배운 것을 TIL로 기록합니다.",
-    "recent_til": "최근 TIL",
-    "view_all": "전체 보기"
+    "hero_title": "swk",
+    "hero_subtitle": "developer",
+    "recent_til": "",
+    "view_all": "all"
   },
   "til": {
     "title": "TIL",
-    "subtitle": "Today I Learned — 매일 배우고 기록합니다.",
-    "all_tags": "전체",
-    "no_posts": "아직 글이 없습니다."
+    "subtitle": "",
+    "all_tags": "all",
+    "no_posts": "no posts."
   },
   "about": {
-    "title": "소개",
-    "subtitle": "저는 보안 연구, 백엔드 개발, 자동화를 즐기는 개발자입니다.",
-    "links": "링크"
+    "title": "about",
+    "subtitle": "developer",
+    "links": ""
   },
   "post": {
-    "views": "조회수",
-    "back": "← 목록으로",
-    "toc": "목차",
-    "tags": "태그"
+    "views": "views",
+    "back": "← back",
+    "toc": "contents",
+    "tags": ""
   },
   "theme": {
-    "toggle": "테마 변경"
+    "toggle": "theme"
   }
 }

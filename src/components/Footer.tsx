@@ -1,8 +1,8 @@
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-[var(--border)] py-8">
-      <div className="max-w-2xl mx-auto px-6">
-        <p className="text-xs text-[var(--subtle)]">© 2026 swk</p>
+    <footer className="mt-24 pb-10">
+      <div className="max-w-xl mx-auto px-6">
+        <p className="text-xs text-[var(--subtle)]">swk</p>
       </div>
     </footer>
   );
