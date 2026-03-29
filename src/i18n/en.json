@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "home": "Home",
+    "til": "TIL",
+    "about": "About"
+  },
+  "home": {
+    "hero_title": "Hi, I'm Kim Chumji",
+    "hero_subtitle": "A developer passionate about security, development, and automation. I document what I learn through TIL.",
+    "recent_til": "Recent TIL",
+    "view_all": "View all"
+  },
+  "til": {
+    "title": "TIL",
+    "subtitle": "Today I Learned — documenting daily learnings.",
+    "all_tags": "All",
+    "no_posts": "No posts yet."
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "A developer who enjoys security research, backend development, and automation.",
+    "links": "Links"
+  },
+  "post": {
+    "views": "views",
+    "back": "← Back",
+    "toc": "Table of Contents",
+    "tags": "Tags"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
+  }
+}

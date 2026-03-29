@@ -1,0 +1,139 @@
+---
+title: "SSL 핀닝과 mitmproxy로 앱 트래픽 분석하기"
+date: "2026-03-29"
+tags: ["security", "reverse-engineering", "mitmproxy", "android"]
+lang: "ko"
+summary: "Android 앱의 SSL 핀닝을 우회하고 mitmproxy로 HTTPS 트래픽을 분석하는 방법을 정리했다."
+---
+
+## SSL 핀닝이란?
+
+SSL 핀닝(SSL Pinning)은 앱이 서버의 인증서나 공개키를 하드코딩해두고, 연결 시 이 값과 일치하는지 검증하는 보안 기법이다. 일반적인 MITM 공격을 막기 위한 용도로 사용된다.
+
+```
+Client ──── HTTPS ────► Server
+         [인증서 검증]
+         └─ 핀닝된 인증서와 비교
+```
+
+## 왜 우회가 필요한가?
+
+보안 연구나 버그바운티, 또는 자신이 만든 앱 디버깅 시 트래픽을 분석해야 할 때가 있다. mitmproxy는 이런 목적으로 많이 쓰이는 오픈소스 프록시다.
+
+## 환경 세팅
+
+### 1. mitmproxy 설치
+
+```bash
+brew install mitmproxy
+# 또는
+pip install mitmproxy
+```
+
+### 2. 안드로이드 에뮬레이터 설정
+
+루팅된 에뮬레이터(예: AVD의 Google APIs 이미지)가 필요하다.
+
+```bash
+# emulator 실행 후
+adb root
+adb remount
+
+# mitmproxy CA 인증서를 시스템 인증서로 설치
+adb push ~/.mitmproxy/mitmproxy-ca-cert.cer /sdcard/
+adb shell
+# 내부에서: 인증서를 /system/etc/security/cacerts/ 에 복사
+```
+
+### 3. 프록시 설정
+
+```bash
+# mitmproxy 실행
+mitmproxy --listen-port 8080
+
+# 에뮬레이터 WiFi 설정에서 프록시를 호스트 IP:8080 으로 설정
+```
+
+## Frida로 SSL 핀닝 우회
+
+단순히 CA 인증서를 설치해도 앱이 자체적으로 핀닝 로직을 구현하면 차단된다. 이때 Frida를 사용한다.
+
+```bash
+pip install frida-tools
+
+# frida-server를 에뮬레이터에 push 후 실행
+adb push frida-server /data/local/tmp/
+adb shell chmod 755 /data/local/tmp/frida-server
+adb shell /data/local/tmp/frida-server &
+```
+
+유명한 SSL 핀닝 우회 스크립트:
+
+```javascript
+// ssl-pinning-bypass.js
+Java.perform(function() {
+  var TrustManager = Java.registerClass({
+    name: 'com.custom.TrustManager',
+    implements: [Java.use('javax.net.ssl.X509TrustManager')],
+    methods: {
+      checkClientTrusted: function(chain, authType) {},
+      checkServerTrusted: function(chain, authType) {},
+      getAcceptedIssuers: function() { return []; }
+    }
+  });
+  
+  // SSLContext에 커스텀 TrustManager 주입
+  var SSLContext = Java.use('javax.net.ssl.SSLContext');
+  SSLContext.init.overload(
+    '[Ljavax.net.ssl.KeyManager;',
+    '[Ljavax.net.ssl.TrustManager;',
+    'java.security.SecureRandom'
+  ).implementation = function(km, tm, sr) {
+    this.init(km, [TrustManager.$new()], sr);
+  };
+});
+```
+
+실행:
+
+```bash
+frida -U -l ssl-pinning-bypass.js -f com.target.app
+```
+
+## mitmproxy에서 트래픽 분석
+
+mitmproxy 웹 UI(`http://localhost:8081`)에서 실시간으로 요청/응답을 볼 수 있다.
+
+```python
+# addon.py - 특정 엔드포인트만 로깅
+from mitmproxy import http
+import json
+
+class APILogger:
+    def response(self, flow: http.HTTPFlow) -> None:
+        if "api." in flow.request.host:
+            print(f"[{flow.request.method}] {flow.request.url}")
+            try:
+                body = json.loads(flow.response.content)
+                print(json.dumps(body, indent=2, ensure_ascii=False))
+            except:
+                pass
+
+addons = [APILogger()]
+```
+
+실행:
+
+```bash
+mitmproxy -s addon.py
+```
+
+## 주의사항
+
+> ⚠️ 이 기법은 **자신이 소유한 앱** 또는 **명시적 허가를 받은 서비스**에만 사용해야 한다. 무단으로 타인의 서비스 트래픽을 분석하는 것은 불법이다.
+
+## 참고 링크
+
+- [mitmproxy 공식 문서](https://docs.mitmproxy.org/)
+- [Frida 공식 문서](https://frida.re/docs/)
+- [android-ssl-pinning-bypass](https://github.com/WoWoW0/android-ssl-pinning-bypass)

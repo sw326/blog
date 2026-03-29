@@ -1,26 +1,152 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fffbf5;
+  --foreground: #1e293b;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #e2e8f0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* MDX prose styles */
+article h1,
+article h2,
+article h3,
+article h4 {
+  scroll-margin-top: 80px;
+}
+
+article h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #1e293b;
+  border-bottom: 2px solid #fde68a;
+  padding-bottom: 0.25rem;
+}
+
+.dark article h2 {
+  color: #e2e8f0;
+  border-bottom-color: #92400e;
+}
+
+article h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #334155;
+}
+
+.dark article h3 {
+  color: #cbd5e1;
+}
+
+article p {
+  margin-bottom: 1.25rem;
+  line-height: 1.8;
+  color: #475569;
+}
+
+.dark article p {
+  color: #94a3b8;
+}
+
+article a {
+  color: #d97706;
+  text-decoration: underline;
+  text-decoration-color: #fde68a;
+  transition: color 0.15s;
+}
+
+article a:hover {
+  color: #b45309;
+}
+
+.dark article a {
+  color: #fbbf24;
+  text-decoration-color: #92400e;
+}
+
+article pre {
+  background: #1e293b;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid #334155;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.dark article pre {
+  background: #0f172a;
+  border-color: #1e293b;
+}
+
+article code:not(pre code) {
+  background: #fef3c7;
+  color: #b45309;
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.dark article code:not(pre code) {
+  background: #292524;
+  color: #fbbf24;
+}
+
+article blockquote {
+  border-left: 4px solid #f59e0b;
+  padding: 0.75rem 1.25rem;
+  background: #fffbeb;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin: 1.5rem 0;
+  color: #78716c;
+}
+
+.dark article blockquote {
+  background: #1c1917;
+  color: #a8a29e;
+}
+
+article ul,
+article ol {
+  margin: 1rem 0 1.5rem 1.5rem;
+  line-height: 1.8;
+  color: #475569;
+}
+
+.dark article ul,
+.dark article ol {
+  color: #94a3b8;
+}
+
+article li {
+  margin-bottom: 0.3rem;
+}
+
+article hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 2rem 0;
+}
+
+.dark article hr {
+  border-top-color: #334155;
 }
