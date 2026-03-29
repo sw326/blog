@@ -1,76 +1,82 @@
-import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { getAllTilMeta } from '@/lib/mdx';
-import { TilCard } from '@/components/TilCard';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'home' });
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Home',
-    description: t('hero_subtitle'),
+    title: 'swk',
+    description: 'developer',
   };
 }
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'home' });
-  const posts = getAllTilMeta().slice(0, 5);
+  const posts = getAllTilMeta().slice(0, 10);
 
   return (
-    <div className="space-y-16">
-      {/* Hero */}
-      <section className="pt-8 pb-4">
-        <div className="inline-block mb-4 text-5xl">🦞</div>
-        <h1 className="text-4xl sm:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4 leading-tight">
-          {t('hero_title')}
-        </h1>
-        <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
-          {t('hero_subtitle')}
-        </p>
-        <div className="flex gap-3 mt-6">
-          <Link
-            href={`/${locale}/til`}
-            className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-white font-medium rounded-lg
-              shadow-sm hover:shadow-md transition-all duration-200"
+    <div className="space-y-16 pt-12">
+      {/* Identity */}
+      <section className="space-y-1">
+        <p className="text-sm font-medium text-[var(--foreground)]">swk</p>
+        <p className="text-sm text-[var(--muted)]">developer</p>
+        <div className="flex gap-6 pt-2">
+          <a
+            href="https://github.com/sw326"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
           >
-            TIL 보기
-          </Link>
-          <Link
-            href={`/${locale}/about`}
-            className="px-5 py-2.5 border border-amber-200 dark:border-slate-600
-              text-amber-700 dark:text-amber-300
-              hover:bg-amber-50 dark:hover:bg-slate-800
-              font-medium rounded-lg transition-all duration-200"
+            GitHub
+          </a>
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
           >
-            {locale === 'ko' ? '소개' : 'About'}
-          </Link>
+            Notion
+          </a>
         </div>
       </section>
 
-      {/* Recent TIL */}
-      <section>
-        <div className="flex items-baseline justify-between mb-6">
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
-            {t('recent_til')}
-          </h2>
-          <Link
-            href={`/${locale}/til`}
-            className="text-sm text-amber-600 dark:text-amber-400
-              hover:text-amber-500 transition-colors duration-200"
-          >
-            {t('view_all')} →
-          </Link>
-        </div>
-        <div className="space-y-4">
-          {posts.map((post) => (
-            <TilCard key={post.slug} post={post} locale={locale} />
-          ))}
-        </div>
-      </section>
+      {/* TIL list */}
+      {posts.length > 0 && (
+        <section>
+          <div className="space-y-0">
+            {posts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/${locale}/til/${post.slug}`}
+                className="flex items-baseline gap-6 py-2 group"
+              >
+                <time className="text-xs text-[var(--subtle)] shrink-0 font-mono">
+                  {post.date}
+                </time>
+                <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
+                  {post.title}
+                </span>
+                {post.tags.length > 0 && (
+                  <span className="text-xs text-[var(--subtle)] shrink-0">
+                    {post.tags.join(' ')}
+                  </span>
+                )}
+              </Link>
+            ))}
+          </div>
+          {getAllTilMeta().length > 10 && (
+            <div className="mt-4">
+              <Link
+                href={`/${locale}/til`}
+                className="text-xs text-[var(--subtle)] hover:text-[var(--foreground)] transition-colors"
+              >
+                all posts
+              </Link>
+            </div>
+          )}
+        </section>
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -11,11 +11,9 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'home' });
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    description: t('hero_subtitle'),
+    description: 'developer',
   };
 }
 
@@ -32,7 +30,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <ThemeProvider>
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
           <Header />
-          <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+          <main className="max-w-2xl mx-auto px-6 pb-10">
             {children}
           </main>
           <Footer />
