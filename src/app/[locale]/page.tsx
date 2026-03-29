@@ -21,56 +21,34 @@ export default async function HomePage({ params }: Props) {
       <section className="space-y-1">
         <p className="text-sm font-medium text-[var(--foreground)]">sw326</p>
         <p className="text-sm text-[var(--muted)]">developer</p>
-        <div className="flex gap-6 pt-2">
-          <a
-            href="https://github.com/sw326"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
-          >
-            GitHub
-          </a>
-          <a
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
-          >
-            Notion
-          </a>
-        </div>
       </section>
 
       {/* TIL list */}
       {posts.length > 0 && (
         <section>
-          <div className="space-y-0">
+          <div className="space-y-5">
             {posts.map((post) => (
               <Link
                 key={post.slug}
                 href={`/${locale}/til/${post.slug}`}
-                className="block py-2.5 group"
+                className="block group"
               >
-                <div className="flex items-baseline gap-4 min-w-0">
-                  <time className="text-xs text-[var(--subtle)] shrink-0 font-mono w-24">
-                    {post.date}
-                  </time>
-                  <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors truncate">
-                    {post.title}
-                  </span>
-                </div>
+                <time className="text-xs text-[var(--subtle)] font-mono block mb-0.5">
+                  {post.date}
+                </time>
+                <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
+                  {post.title}
+                </span>
                 {post.tags.length > 0 && (
-                  <div className="pl-28 mt-0.5">
-                    <span className="text-xs text-[var(--subtle)]">
-                      {post.tags.join(' · ')}
-                    </span>
-                  </div>
+                  <span className="text-xs text-[var(--subtle)] block mt-0.5">
+                    {post.tags.join(' · ')}
+                  </span>
                 )}
               </Link>
             ))}
           </div>
           {getAllTilMeta().length > 10 && (
-            <div className="mt-6 pl-28">
+            <div className="mt-8">
               <Link
                 href={`/${locale}/til`}
                 className="text-xs text-[var(--subtle)] hover:text-[var(--foreground)] transition-colors"
