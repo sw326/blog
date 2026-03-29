@@ -1,17 +1,28 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+function getSupabase(): SupabaseClient | null {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key || url === 'https://your-project.supabase.co') return null;
+  try {
+    return createClient(url, key);
+  } catch {
+    return null;
+  }
+}
 
-const supabase =
-  supabaseUrl && supabaseKey
-    ? createClient(supabaseUrl, supabaseKey)
-    : null;
+// lazy init — 빌드 타임에 env 없어도 안전
+let _client: SupabaseClient | null | undefined;
+function client(): SupabaseClient | null {
+  if (_client === undefined) _client = getSupabase();
+  return _client;
+}
 
 export async function getViewCount(slug: string): Promise<number> {
-  if (!supabase) return 0;
+  const sb = client();
+  if (!sb) return 0;
   try {
-    const { data } = await supabase
+    const { data } = await sb
       .from('post_views')
       .select('count')
       .eq('slug', slug)
@@ -23,9 +34,10 @@ export async function getViewCount(slug: string): Promise<number> {
 }
 
 export async function incrementViewCount(slug: string): Promise<number> {
-  if (!supabase) return 0;
+  const sb = client();
+  if (!sb) return 0;
   try {
-    const { data } = await supabase.rpc('increment_view', { post_slug: slug });
+    const { data } = await sb.rpc('increment_view', { post_slug: slug });
     return data ?? 0;
   } catch {
     return 0;
@@ -33,9 +45,10 @@ export async function incrementViewCount(slug: string): Promise<number> {
 }
 
 export async function getLikeCount(slug: string): Promise<number> {
-  if (!supabase) return 0;
+  const sb = client();
+  if (!sb) return 0;
   try {
-    const { count } = await supabase
+    const { count } = await sb
       .from('post_likes')
       .select('*', { count: 'exact', head: true })
       .eq('slug', slug);
@@ -45,4 +58,6 @@ export async function getLikeCount(slug: string): Promise<number> {
   }
 }
 
-export { supabase };
+export function getSupabaseClient(): SupabaseClient | null {
+  return client();
+}

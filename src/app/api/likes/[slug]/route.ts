@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from '@/lib/supabase';
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  const supabase = getSupabaseClient();
   if (!supabase) return NextResponse.json({ count: 0 });
 
   try {
@@ -24,6 +25,7 @@ export async function POST(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  const supabase = getSupabaseClient();
   if (!supabase) return NextResponse.json({ liked: false, count: 0 });
 
   try {
