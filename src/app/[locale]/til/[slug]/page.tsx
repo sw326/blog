@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { TOC } from '@/components/TOC';
 import { ViewCounter } from '@/components/ViewCounter';
 import { GiscusComments } from '@/components/GiscusComments';
+import { LikeButton } from '@/components/LikeButton';
+import { ShareButton } from '@/components/ShareButton';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -55,10 +57,11 @@ export default async function TilDetailPage({ params }: Props) {
           <h1 className="text-xl font-semibold text-[var(--foreground)] leading-tight mb-3">
             {post.title}
           </h1>
-          <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--subtle)]">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--subtle)]">
             <time className="font-mono">{post.date}</time>
-            <span>·</span>
             <ViewCounter slug={slug} />
+            <LikeButton slug={slug} />
+            <ShareButton title={post.title} />
           </div>
           {post.tags.length > 0 && (
             <div className="flex flex-wrap gap-3 mt-3">

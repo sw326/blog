@@ -32,4 +32,17 @@ export async function incrementViewCount(slug: string): Promise<number> {
   }
 }
 
+export async function getLikeCount(slug: string): Promise<number> {
+  if (!supabase) return 0;
+  try {
+    const { count } = await supabase
+      .from('post_likes')
+      .select('*', { count: 'exact', head: true })
+      .eq('slug', slug);
+    return count ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
 export { supabase };
