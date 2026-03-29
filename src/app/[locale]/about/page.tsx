@@ -12,7 +12,7 @@ export default async function AboutPage() {
   return (
     <div className="pt-12 space-y-8">
       <p className="text-sm text-[var(--foreground)]">developer</p>
-      <SocialLinks showLabel />
+      <SocialLinks showLabel vertical />
     </div>
   );
 }
