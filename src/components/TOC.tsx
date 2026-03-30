@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 interface Heading {
   id: string;
@@ -12,7 +11,6 @@ interface Heading {
 export function TOC() {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [active, setActive] = useState<string>('');
-  const t = useTranslations('post');
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('article h2, article h3'));
@@ -34,22 +32,33 @@ export function TOC() {
     return () => observer.disconnect();
   }, []);
 
+  function scrollTo(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setActive(id);
+    // URL hash 업데이트 (뒤로가기 지원)
+    history.pushState(null, '', `#${id}`);
+  }
+
   if (headings.length === 0) return null;
 
   return (
-    <nav className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-auto">
-      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
-        {t('toc')}
+    <nav>
+      <p className="text-xs text-[var(--subtle)] mb-3 uppercase tracking-wider">
+        contents
       </p>
       <ul className="space-y-1.5">
         {headings.map((h) => (
-          <li key={h.id} style={{ paddingLeft: `${(h.level - 2) * 12}px` }}>
+          <li key={h.id} style={{ paddingLeft: `${(h.level - 2) * 10}px` }}>
             <a
               href={`#${h.id}`}
-              className={`block text-sm transition-colors duration-150 hover:text-amber-600 dark:hover:text-amber-400
+              onClick={(e) => scrollTo(e, h.id)}
+              className={`block text-xs transition-colors duration-150 leading-relaxed
                 ${active === h.id
-                  ? 'text-amber-600 dark:text-amber-400 font-medium'
-                  : 'text-slate-500 dark:text-slate-400'
+                  ? 'text-[var(--foreground)]'
+                  : 'text-[var(--subtle)] hover:text-[var(--muted)]'
                 }`}
             >
               {h.text}
