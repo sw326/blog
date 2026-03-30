@@ -43,7 +43,7 @@ export default async function TilDetailPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'post' });
 
   return (
-    <div className="lg:grid lg:grid-cols-[1fr_200px] lg:gap-12 pt-12">
+    <div className="lg:grid lg:grid-cols-[minmax(0,2fr)_180px] lg:gap-16 pt-12">
       {/* Main content */}
       <div className="min-w-0">
         <Link

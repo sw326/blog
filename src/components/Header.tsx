@@ -10,7 +10,7 @@ export function Header() {
 
   return (
     <header className="w-full">
-      <div className="max-w-xl mx-auto px-6 h-14 flex items-center justify-between">
+      <div className="max-w-2xl mx-auto px-6 h-14 flex items-center justify-between">
         <Link
           href={`/${locale}`}
           className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
