@@ -43,8 +43,16 @@ export default async function TilDetailPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'post' });
 
   return (
-    <div className="lg:grid lg:grid-cols-[minmax(0,2fr)_180px] lg:gap-16 pt-12">
-      {/* Main content */}
+    <div className="relative pt-12">
+      {/* TOC — fixed to the right of the content column, outside the flow */}
+      <aside
+        className="hidden xl:block fixed top-20 right-[max(1.5rem,calc(50%-36rem))] w-48"
+        style={{ maxHeight: 'calc(100vh - 6rem)', overflowY: 'auto' }}
+      >
+        <TOC />
+      </aside>
+
+      {/* Main content — full container width */}
       <div className="min-w-0">
         <Link
           href={`/${locale}/til`}
@@ -80,11 +88,6 @@ export default async function TilDetailPage({ params }: Props) {
 
         <GiscusComments />
       </div>
-
-      {/* TOC sidebar */}
-      <aside className="hidden lg:block">
-        <TOC />
-      </aside>
     </div>
   );
 }
