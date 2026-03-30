@@ -30,7 +30,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <ThemeProvider>
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col">
           <Header />
-          <main className="max-w-2xl mx-auto px-6 pb-16 flex-1 w-full">
+          <main className="w-full max-w-2xl mx-auto px-6 pb-16 flex-1">
             {children}
           </main>
           <Footer />

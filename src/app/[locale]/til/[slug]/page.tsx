@@ -46,8 +46,12 @@ export default async function TilDetailPage({ params }: Props) {
     <div className="relative pt-12">
       {/* TOC — fixed to the right of the content column, outside the flow */}
       <aside
-        className="hidden xl:block fixed top-20 right-[max(1.5rem,calc(50%-36rem))] w-48"
-        style={{ maxHeight: 'calc(100vh - 6rem)', overflowY: 'auto' }}
+        className="hidden xl:block fixed top-20 w-44"
+        style={{
+          left: 'calc(50% + 336px + 2rem)',
+          maxHeight: 'calc(100vh - 6rem)',
+          overflowY: 'auto',
+        }}
       >
         <TOC />
       </aside>
