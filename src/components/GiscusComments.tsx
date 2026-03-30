@@ -18,7 +18,7 @@ export function GiscusComments() {
   if (!mounted) return null;
 
   return (
-    <div className="mt-12 pt-8 border-t border-amber-100 dark:border-slate-700">
+    <div className="mt-16 pt-8 border-t border-[var(--border)]">
       <Giscus
         repo={REPO}
         repoId={REPO_ID}
