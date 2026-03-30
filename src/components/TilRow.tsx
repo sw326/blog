@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PostStats } from './PostStats';
 import type { TilMeta } from '@/types';
 
 interface TilRowProps {
@@ -15,9 +16,12 @@ export function TilRow({ post, locale }: TilRowProps) {
       <time className="text-xs text-[var(--subtle)] font-mono block mb-0.5">
         {post.date}
       </time>
-      <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors block">
-        {post.title}
-      </span>
+      <div className="flex items-baseline justify-between gap-4">
+        <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors min-w-0 truncate">
+          {post.title}
+        </span>
+        <PostStats slug={post.slug} />
+      </div>
       {post.tags.length > 0 && (
         <span className="text-xs text-[var(--subtle)] block mt-0.5">
           {post.tags.join(' · ')}

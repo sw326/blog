@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getAllTilMeta } from '@/lib/mdx';
+import { PostStats } from '@/components/PostStats';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -36,9 +37,12 @@ export default async function HomePage({ params }: Props) {
                 <time className="text-xs text-[var(--subtle)] font-mono block mb-0.5">
                   {post.date}
                 </time>
-                <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-                  {post.title}
-                </span>
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="text-sm text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors min-w-0 truncate">
+                    {post.title}
+                  </span>
+                  <PostStats slug={post.slug} />
+                </div>
                 {post.tags.length > 0 && (
                   <span className="text-xs text-[var(--subtle)] block mt-0.5">
                     {post.tags.join(' · ')}
